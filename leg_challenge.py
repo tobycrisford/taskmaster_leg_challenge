@@ -1,7 +1,9 @@
 import nashpy as nash
 import numpy as np
 
-one_arr = np.ones(6)
+NUMBER_OF_ANIMALS = 6
+
+one_arr = np.ones(NUMBER_OF_ANIMALS)
 
 def payoff_matrix(a_legs: np.ndarray, b_legs: np.ndarray, target: int):
 
@@ -13,3 +15,8 @@ def payoff_matrix(a_legs: np.ndarray, b_legs: np.ndarray, target: int):
     return wins.astype(float) - losses.astype(float)
 
 
+
+def solve_game(a_legs: np.ndarray, b_legs: np.ndarray, target: int):
+
+    rps = nash.Game(payoff_matrix(a_legs, b_legs, target))
+    return rps.support_enumeration()
