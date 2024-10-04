@@ -52,7 +52,8 @@ game_cache = {}
 def solve_game_cached(a_legs: np.ndarray, b_legs: np.ndarray, target: int, n_rounds: int):
 
     a_key = np.sort(a_legs)
-    cache_key = (tuple(a_key), target, n_rounds)
+    b_key = np.sort(b_legs)
+    cache_key = (tuple(a_key), tuple(b_key), target, n_rounds)
 
     if cache_key not in game_cache:
         new_solution = solve_game(a_legs, b_legs, target, n_rounds)
