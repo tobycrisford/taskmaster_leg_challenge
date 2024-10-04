@@ -1,3 +1,5 @@
+from itertools import combinations
+
 import nashpy as nash
 import numpy as np
 
@@ -63,3 +65,22 @@ def solve_game_cached(a_legs: np.ndarray, b_legs: np.ndarray, target: int, n_rou
         game_cache[cache_key] = new_solution[0], strategy
     
     return game_cache[cache_key]
+
+def generate_complete_strategy_map(all_legs: list[int], rounds_remaining: int, target: int):
+
+    result = {}
+    
+    all_indices = {i for i in range(len(all_legs))}
+    for position in combinations([i for i in range(len(all_legs))], int(len(all_legs) / 2)):
+        other_position = all_indices.difference(position)
+        a_legs = np.array([all_legs[i] for i in position])
+        b_legs = np.array([all_legs[i] for i in other_position])
+        result_key = tuple(int(a) for a in np.sort(a_legs))
+        result[result_key] = solve_game_cached(
+            a_legs,
+            b_legs,
+            target,
+            rounds_remaining,
+        )
+
+    return result
