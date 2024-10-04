@@ -1,4 +1,5 @@
 from itertools import combinations
+import json
 
 import nashpy as nash
 import numpy as np
@@ -112,3 +113,27 @@ def find_imbalanced_positions(all_legs: list[int], target: int):
             results.append((a_legs, b_legs, r[0]))
 
     return results
+
+def clean_strategy(strat: dict[tuple[int], tuple]):
+    """Cleans output of generate_complete_strategy_map for json save."""
+
+    clean_strat = {}
+    
+    for k in strat:
+        a_probs = strat[k][1][0]
+        a_probs.sort(key=lambda t: t[0])
+        assert all(a_probs[i][0] == k[i] for i in range(len(k)))
+
+        clean_strat[''.join(str(n) for n in k)] = {'value': float(strat[k][0]), 'strategy': [float(a_prob[1]) for a_prob in a_probs]}
+
+    return clean_strat
+
+def save_strategy_map(all_legs: list[int], target: int):
+    """Save a strategy map in json format for the indefinite game (just use 20!)"""
+
+    r = generate_complete_strategy_map(all_legs, 20, target)
+
+    filename = ''.join(str(leg) for leg in sorted(all_legs)) + f'_{target}.json'
+
+    with open(filename, 'w') as f:
+        json.dump(clean_strategy(r), f)
