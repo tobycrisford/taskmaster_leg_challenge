@@ -29,9 +29,9 @@ def solve_game(a_legs: np.ndarray, b_legs: np.ndarray, target: int, n_rounds: in
                 a_throw = a_legs[i]
                 b_throw = b_legs[j]
                 if target - a_sum == b_throw - a_throw:
-                    matrix[i, j] = 1.0
-                elif b_sum - target == b_throw - a_throw:
-                    matrix[i, j] = -1.0
+                    matrix[i, j] += 1.0
+                if b_sum - target == b_throw - a_throw:
+                    matrix[i, j] -= 1.0
                 else:
                     a_legs[i] = b_throw
                     b_legs[j] = a_throw
