@@ -54,6 +54,12 @@ def solve_game_cached(a_legs: np.ndarray, b_legs: np.ndarray, target: int, n_rou
     cache_key = (tuple(a_key), target, n_rounds)
 
     if cache_key not in game_cache:
-        game_cache[cache_key] = solve_game(a_legs, b_legs, target, n_rounds)
+        new_solution = solve_game(a_legs, b_legs, target, n_rounds)
+        # This ensures we store the eq strat in an order invariant way
+        strategy = [
+            [(a_legs[i], new_solution[1][0][i]) for i in range(len(a_legs))],
+            [(b_legs[i], new_solution[1][1][i]) for i in range(len(b_legs))],
+        ]
+        game_cache[cache_key] = new_solution[0], strategy
     
     return game_cache[cache_key]
