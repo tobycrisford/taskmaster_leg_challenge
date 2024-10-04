@@ -14,8 +14,6 @@ def payoff_matrix(a_legs: np.ndarray, b_legs: np.ndarray, target: int):
 
     return wins.astype(float) - losses.astype(float)
 
-
-
 def solve_game(a_legs: np.ndarray, b_legs: np.ndarray, target: int, n_rounds: int):
 
     if n_rounds == 1:
@@ -35,12 +33,27 @@ def solve_game(a_legs: np.ndarray, b_legs: np.ndarray, target: int, n_rounds: in
                 else:
                     a_legs[i] = b_throw
                     b_legs[j] = a_throw
-                    matrix[i, j] = solve_game(a_legs, b_legs, target, n_rounds - 1)[0]
+                    matrix[i, j] = solve_game_cached(a_legs, b_legs, target, n_rounds - 1)[0]
                     a_legs[i] = a_throw
                     b_legs[j] = b_throw
     else:
         raise NotImplementedError()
     
     rps = nash.Game(matrix)
-    eq_strategies = list(rps.support_enumeration())
-    return rps[eq_strategies[0][0], eq_strategies[0][1]][0], eq_strategies
+    for eq in rps.support_enumeration():
+        eq_strategy = eq
+        break
+    return rps[eq_strategy[0], eq_strategy[1]][0], eq_strategy
+
+
+game_cache = {}
+
+def solve_game_cached(a_legs: np.ndarray, b_legs: np.ndarray, target: int, n_rounds: int):
+
+    a_key = np.sort(a_legs)
+    cache_key = (tuple(a_key), target, n_rounds)
+
+    if cache_key not in game_cache:
+        game_cache[cache_key] = solve_game(a_legs, b_legs, target, n_rounds)
+    
+    return game_cache[cache_key]
