@@ -3,13 +3,12 @@ from itertools import combinations
 import nashpy as nash
 import numpy as np
 
-NUMBER_OF_ANIMALS = 6
-
-one_arr = np.ones(NUMBER_OF_ANIMALS)
-
 def payoff_matrix(a_legs: np.ndarray, b_legs: np.ndarray, target: int):
 
-    leg_change = np.outer(one_arr, b_legs) - np.outer(a_legs, one_arr)
+    ones_a = np.ones(len(a_legs))
+    ones_b = np.ones(len(b_legs))
+
+    leg_change = np.outer(ones_a, b_legs) - np.outer(a_legs, ones_b)
 
     wins = (target - np.sum(a_legs)) == leg_change
     losses = (np.sum(b_legs) - target) == leg_change
@@ -84,3 +83,7 @@ def generate_complete_strategy_map(all_legs: list[int], rounds_remaining: int, t
         )
 
     return result
+
+def clear_cache():
+
+    game_cache = {}
