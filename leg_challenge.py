@@ -98,6 +98,16 @@ def clear_cache():
     game_cache = {}
 
 def find_imbalanced_positions(all_legs: list[int], target: int):
-    """Return possible situations with asymmetric advantage in a 1-turn game, given list of animals (leg counts)."""
+    """Return possible situations with asymmetric advantage in a 1-turn game, given list of animals (leg counts).
+    
+    If empty, then n-turn game strategy will be equivalent to the 1-turn game.
+    """
 
-    pass
+    results = []
+
+    for a_legs, b_legs in iterate_positions(all_legs):
+        r = solve_game_cached(a_legs, b_legs, target, 1)
+        if r[0] != 0.0:
+            results.append((a_legs, b_legs, r[0]))
+
+    return results
