@@ -65,15 +65,24 @@ def solve_game_cached(a_legs: np.ndarray, b_legs: np.ndarray, target: int, n_rou
     
     return game_cache[cache_key]
 
-def generate_complete_strategy_map(all_legs: list[int], rounds_remaining: int, target: int):
+def iterate_positions(all_legs: list[int]):
+    """Given list of animals, iterate through all possible divisions between players,
+    assuming same number on each side.
+    """
 
-    result = {}
-    
     all_indices = {i for i in range(len(all_legs))}
     for position in combinations([i for i in range(len(all_legs))], int(len(all_legs) / 2)):
         other_position = all_indices.difference(position)
         a_legs = np.array([all_legs[i] for i in position])
         b_legs = np.array([all_legs[i] for i in other_position])
+        yield a_legs, b_legs
+
+
+def generate_complete_strategy_map(all_legs: list[int], rounds_remaining: int, target: int):
+
+    result = {}
+    
+    for a_legs, b_legs in iterate_positions(all_legs):
         result_key = tuple(int(a) for a in np.sort(a_legs))
         result[result_key] = solve_game_cached(
             a_legs,
@@ -87,3 +96,8 @@ def generate_complete_strategy_map(all_legs: list[int], rounds_remaining: int, t
 def clear_cache():
 
     game_cache = {}
+
+def find_imbalanced_positions(all_legs: list[int], target: int):
+    """Return possible situations with asymmetric advantage in a 1-turn game, given list of animals (leg counts)."""
+
+    pass
