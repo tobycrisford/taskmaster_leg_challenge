@@ -7,7 +7,7 @@ const target_default = 22;
 
 let legs = {};
 let target = 0;
-let in_progress = true;
+let winner = null;
 
 function set_defaults() {
 
@@ -20,6 +20,7 @@ function set_defaults() {
     }
 
     target = target_default;
+    winner = null;
 }
 
 function update_player_row_display(row, player_name) {
@@ -52,13 +53,15 @@ function update_display() {
     document.getElementById("target_display").textContent = target.toString();
     update_player_row_display(document.getElementById("human_options"), "human", true);
     update_player_row_display(document.getElementById("computer_options"), "computer", false);
+    if (winner !== null) {
+        document.getElementById("result_display").textContent = winner + " wins!";
+    }
 }
 
 function reset_game() {
     console.log("Starting new game...");
     set_defaults();
     update_display();
-    in_progress = true;
 }
 
 function next_computer_move() {
@@ -76,16 +79,18 @@ function get_total(player) {
 
 function check_victory() {
     if (get_total("human") == target) {
-        return "human";
+        winner = "human";
     }
-    if (get_total("computer") == target) {
-        return "computer";
+    else if (get_total("computer") == target) {
+        winner = "computer";
     }
-    return null;
+    else {
+        winner = null;
+    }
 }
 
 function next_move(leg_index) {
-    if (!in_progress) {
+    if (winner !== null) {
         return;
     }
 
@@ -97,13 +102,6 @@ function next_move(leg_index) {
     legs.human[leg_index] = computer_leg;
     legs.computer[computer_move] = human_leg;
 
+    check_victory();
     update_display();
-
-    let victory_check = check_victory();
-    if (victory_check === null) {
-        return;
-    }
-    
-    document.getElementById("result_display").textContent = victory_check + " wins!";
-    in_progress = false;
 }
