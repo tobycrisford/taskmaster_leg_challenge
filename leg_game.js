@@ -46,9 +46,14 @@ function create_game() {
     reset_game();
 }
 
+function update_display() {
+    document.getElementById("target_display").textContent = target.toString();
+    update_player_row_display(document.getElementById("human_options"), "human", true);
+    update_player_row_display(document.getElementById("computer_options"), "computer", false);
+}
+
 function reset_game() {
     console.log("Starting new game...");
     set_defaults();
-    update_player_row_display(document.getElementById("human_options"), "human", true);
-    update_player_row_display(document.getElementById("computer_options"), "computer", false);
+    update_display();
 }
