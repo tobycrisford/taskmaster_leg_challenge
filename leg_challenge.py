@@ -86,9 +86,10 @@ def generate_complete_strategy_map(all_legs: list[int], rounds_remaining: int, t
     
     for a_legs, b_legs in iterate_positions(all_legs):
         result_key = tuple(int(a) for a in np.sort(a_legs))
+        # Use random shuffling below for more interesting computer strategies (often there are multiple equilibria)
         result[result_key] = solve_game_cached(
-            a_legs,
-            b_legs,
+            np.random.choice(a_legs, size=len(a_legs), replace=False),
+            np.random.choice(b_legs, size=len(b_legs), replace=False),
             target,
             rounds_remaining,
         )
