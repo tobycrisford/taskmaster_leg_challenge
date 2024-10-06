@@ -31,8 +31,9 @@ function update_player_row_display(row, player_name) {
 }
 
 function create_player_row(row, player_name, selectable) {
-    for (const leg of legs[player_name]) {
+    for (let i = 0;i < legs[player_name].length;i++) {
         td = document.createElement("td");
+        td.setAttribute("onclick", "next_move(" + i.toString() + ")")
         row.appendChild(td);
     }
     td = document.createElement("td");
@@ -56,4 +57,46 @@ function reset_game() {
     console.log("Starting new game...");
     set_defaults();
     update_display();
+}
+
+function next_computer_move() {
+    // Placeholder 'AI' strategy
+    return legs['computer'].length - 1;
+}
+
+function get_total(player) {
+    let total = 0;
+    for (const leg of legs[player]) {
+        total += leg;
+    }
+    return total;
+}
+
+function check_victory() {
+    if (get_total("human") == target) {
+        return "human";
+    }
+    if (get_total("computer") == target) {
+        return "computer";
+    }
+    return null;
+}
+
+function next_move(leg_index) {
+    let computer_move = next_computer_move();
+    
+    let human_leg = legs.human[leg_index];
+    let computer_leg = legs.computer[computer_move];
+
+    legs.human[leg_index] = computer_leg;
+    legs.computer[computer_move] = human_leg;
+
+    update_display();
+
+    let victory_check = check_victory();
+    if (victory_check === null) {
+        return;
+    }
+    
+    document.getElementById("result_display").textContent = victory_check + " wins!";
 }
