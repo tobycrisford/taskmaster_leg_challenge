@@ -7,6 +7,7 @@ const target_default = 22;
 
 let legs = {};
 let target = 0;
+let in_progress = true;
 
 function set_defaults() {
 
@@ -57,6 +58,7 @@ function reset_game() {
     console.log("Starting new game...");
     set_defaults();
     update_display();
+    in_progress = true;
 }
 
 function next_computer_move() {
@@ -83,6 +85,10 @@ function check_victory() {
 }
 
 function next_move(leg_index) {
+    if (!in_progress) {
+        return;
+    }
+
     let computer_move = next_computer_move();
     
     let human_leg = legs.human[leg_index];
@@ -99,4 +105,5 @@ function next_move(leg_index) {
     }
     
     document.getElementById("result_display").textContent = victory_check + " wins!";
+    in_progress = false;
 }
