@@ -45,8 +45,8 @@ function create_player_row(row, player_name, selectable) {
     row.appendChild(td);
 }
 
-function create_game() {
-    set_defaults();
+async function create_game() {
+    await set_defaults();
     create_player_row(document.getElementById("human_options"), "human", true);
     create_player_row(document.getElementById("computer_options"), "computer", false);
     reset_game();
@@ -64,9 +64,9 @@ function update_display() {
     }
 }
 
-function reset_game() {
+async function reset_game() {
     console.log("Starting new game...");
-    set_defaults();
+    await set_defaults();
     update_display();
 }
 
