@@ -36,7 +36,9 @@ function update_player_row_display(row, player_name) {
 function create_player_row(row, player_name, selectable) {
     for (let i = 0;i < legs[player_name].length;i++) {
         td = document.createElement("td");
-        td.setAttribute("onclick", "next_move(" + i.toString() + ")")
+        if (selectable) {
+            td.setAttribute("onclick", "next_move(" + i.toString() + ")");
+        }
         row.appendChild(td);
     }
     td = document.createElement("td");
