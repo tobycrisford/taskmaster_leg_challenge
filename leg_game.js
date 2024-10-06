@@ -3,8 +3,6 @@ const legs_default = {
     "computer": [1,2,3,4,5,6],
 };
 
-const target_default = 22;
-
 let legs = {};
 let target = 0;
 let winner = null;
@@ -19,7 +17,7 @@ function set_defaults() {
         }
     }
 
-    target = target_default;
+    target = parseInt(document.getElementById("target_select").value);
     winner = null;
 }
 
@@ -55,6 +53,9 @@ function update_display() {
     update_player_row_display(document.getElementById("computer_options"), "computer", false);
     if (winner !== null) {
         document.getElementById("result_display").textContent = winner + " wins!";
+    }
+    else {
+        document.getElementById("result_display").textContent = "";
     }
 }
 
