@@ -129,9 +129,9 @@ def clean_strategy(strat: dict[tuple[int], tuple]):
     return clean_strat
 
 def save_strategy_map(all_legs: list[int], target: int):
-    """Save a strategy map in json format for the indefinite game (just use 20!)"""
+    """Save a strategy map in json format for the indefinite game (just use 10!)"""
 
-    r = generate_complete_strategy_map(all_legs, 20, target)
+    r = generate_complete_strategy_map(all_legs, 10, target)
 
     filename = ''.join(str(leg) for leg in sorted(all_legs)) + f'_{target}.json'
 

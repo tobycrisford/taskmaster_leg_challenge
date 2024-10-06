@@ -6,8 +6,9 @@ const legs_default = {
 let legs = {};
 let target = 0;
 let winner = null;
+let computer_strategy = null;
 
-function set_defaults() {
+async function set_defaults() {
 
     legs = {};
     for (player in legs_default) {
@@ -19,6 +20,8 @@ function set_defaults() {
 
     target = parseInt(document.getElementById("target_select").value);
     winner = null;
+
+    computer_strategy = await fetch('computer_strategies/112233445566_' + target.toString() + '.json').then((response) => response.json());
 }
 
 function update_player_row_display(row, player_name) {
@@ -67,7 +70,20 @@ function reset_game() {
 
 function next_computer_move() {
     // Placeholder 'AI' strategy
-    return legs['computer'].length - 1;
+
+    let computer_options = legs["computer"].toSorted();
+    let strategy_key = computer_options.join('');
+    let strat_probs = computer_strategy[strategy_key]["strategy"]
+
+    r = Math.random();
+    let prob_total = 0;
+    for (let i = 0;i < strat_probs.length;i++) {
+        prob_total += strat_probs[i];
+        if (r < prob_total) {
+            return i;
+        }
+    }
+    throw "Bad AI strategy";
 }
 
 function get_total(player) {
