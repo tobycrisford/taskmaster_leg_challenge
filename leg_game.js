@@ -77,9 +77,21 @@ function next_computer_move() {
 
     r = Math.random();
     let prob_total = 0;
+    let move_index_sorted = -1;
     for (let i = 0;i < strat_probs.length;i++) {
         prob_total += strat_probs[i];
         if (r < prob_total) {
+            move_index_sorted = i;
+            break;
+        }
+    }
+    if (move_index_sorted === -1) {
+        throw "Bad AI strategy";
+    }
+
+    let legs_move = computer_options[move_index_sorted];
+    for (let i = 0;i < legs["computer"].length;i++) {
+        if (legs["computer"][i] === legs_move) {
             return i;
         }
     }
