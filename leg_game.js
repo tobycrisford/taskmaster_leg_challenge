@@ -3,6 +3,15 @@ const legs_default = {
     "computer": [1,2,3,4,5,6],
 };
 
+const IMAGE_MAPPING = {
+    "1": "flamingo.png",
+    "2": "kangaroo.png",
+    "3": "dog.png",
+    "4": "cat.png",
+    "5": "alien.png",
+    "6": "ant.png",
+}
+
 let legs = {};
 let target = 0;
 let winner = null;
@@ -27,7 +36,13 @@ async function set_defaults() {
 function update_player_row_display(row, player_name) {
     let total = 0;
     for (let i = 0;i < legs[player_name].length;i++) {
-        row.children[i].textContent = legs[player_name][i].toString();
+        row.children[i].textContent = '';
+        let img = document.createElement("img");
+        img.setAttribute("src", "animal_images/" + IMAGE_MAPPING[legs[player_name][i].toString()])
+        img.setAttribute("width", "100");
+        img.setAttribute("height", "100");
+        row.children[i].appendChild(img);
+
         total += legs[player_name][i];
     }
     row.children[legs[player_name].length].textContent = "Total: " + total.toString();
