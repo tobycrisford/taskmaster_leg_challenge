@@ -36,21 +36,21 @@ async function set_defaults() {
 function update_player_row_display(row, player_name) {
     let total = 0;
     for (let i = 0;i < legs[player_name].length;i++) {
-        row.children[i].textContent = '';
+        row.children[i + 1].textContent = '';
         let img = document.createElement("img");
         img.setAttribute("src", "animal_images/" + IMAGE_MAPPING[legs[player_name][i].toString()])
         img.setAttribute("width", "200");
         img.setAttribute("height", "200");
-        row.children[i].appendChild(img);
-        row.children[i].appendChild(document.createElement("br"));
+        row.children[i + 1].appendChild(img);
+        row.children[i + 1].appendChild(document.createElement("br"));
         let p = document.createElement("p");
         p.setAttribute("align", "center");
         p.textContent = legs[player_name][i].toString();
-        row.children[i].appendChild(p);
+        row.children[i + 1].appendChild(p);
 
         total += legs[player_name][i];
     }
-    row.children[legs[player_name].length].textContent = "Total: " + total.toString();
+    row.children[legs[player_name].length + 1].textContent = "Total: " + total.toString();
 }
 
 function create_player_row(row, player_name, selectable) {
