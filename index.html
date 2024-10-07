@@ -6,6 +6,12 @@
     <body>
         <header>
             <h1>Taskmaster leg task</h1>
+            <div class="intro">
+                This game is based on Taskmaster Series 18 Episode 4.
+            </div>
+        </header>
+        <hr>
+        <div class="game">
             Target: 
             <select id="target_select" value="22">
                 <option value="17">17</option>
@@ -19,16 +25,16 @@
             </select>
             <button onclick="reset_game();">New game</button><br><br>
             Target: <span id="target_display"></span>
-        </header>
-        <table>
-            <tr id="human_options">
-                <td>Your herd: </td>
-            </tr>
-            <tr id="computer_options">
-                <td>Computer's herd: </td>
-            </tr>
-        </table><br><br>
-        <span id="result_display"></span>
-        <script>create_game();</script>
+            <table>
+                <tr id="human_options">
+                    <td>Your herd: </td>
+                </tr>
+                <tr id="computer_options">
+                    <td>Computer's herd: </td>
+                </tr>
+            </table><br><br>
+            <span class="results" id="result_display"></span>
+            <script>create_game();</script>
+        </div>
     </body>
 </html>

@@ -1,4 +1,24 @@
 table {
     border-spacing: 30px;
   }
-  
+
+body {
+    font-size: large;
+    max-width: 50em;
+    font-family: system-ui,-apple-system,"Segoe UI","Roboto","Ubuntu","Cantarell","Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+}
+
+.intro {
+    padding-bottom: 50px;
+}
+
+.game {
+    font-weight: bold;
+    text-align: center;
+    padding-top: 50px;
+    width: 1750px;
+}
+
+.results {
+    font-size: xxx-large;
+}
