@@ -39,8 +39,8 @@ function update_player_row_display(row, player_name) {
         row.children[i].textContent = '';
         let img = document.createElement("img");
         img.setAttribute("src", "animal_images/" + IMAGE_MAPPING[legs[player_name][i].toString()])
-        img.setAttribute("width", "100");
-        img.setAttribute("height", "100");
+        img.setAttribute("width", "200");
+        img.setAttribute("height", "200");
         row.children[i].appendChild(img);
         row.children[i].appendChild(document.createElement("br"));
         let p = document.createElement("p");
