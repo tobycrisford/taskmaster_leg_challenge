@@ -21,4 +21,6 @@ body {
 
 .results {
     font-size: xxx-large;
+    min-height: 60px;
+    padding-top: 10px;
 }
