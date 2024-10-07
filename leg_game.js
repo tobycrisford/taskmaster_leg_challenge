@@ -42,6 +42,11 @@ function update_player_row_display(row, player_name) {
         img.setAttribute("width", "100");
         img.setAttribute("height", "100");
         row.children[i].appendChild(img);
+        row.children[i].appendChild(document.createElement("br"));
+        let p = document.createElement("p");
+        p.setAttribute("align", "center");
+        p.textContent = legs[player_name][i].toString();
+        row.children[i].appendChild(p);
 
         total += legs[player_name][i];
     }
